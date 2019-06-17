@@ -1,12 +1,12 @@
 import numpy as np
 
 
-def sudokusolve(sudoku):
+def solve_sudoku(sudoku):
     """
     A Sudoku solver.
 
-    A solver that finds one of the posible solutions to a Sudoku,
-    by recursively backtracking through possible entry values.
+    A solver that finds one of the possible solutions to a Sudoku,
+    by recursively backtracking through entry values.
 
     Parameters
     ----------
@@ -23,28 +23,29 @@ def sudokusolve(sudoku):
     def next_entry(i):
         return (i // 9, i % 9)
 
-    def state(sudoku, i):
+    def search(sudoku, i):
         i += 1
         if i == 81:
             return sudoku
         r, c = next_entry(i)
         if sudoku[r, c] == 0:
-            return solve(sudoku, i)
-        return state(sudoku, i)
+            return solve_entry(sudoku, i)
+        return search(sudoku, i)
 
-    def solve(sudoku, i):
+    def solve_entry(sudoku, i):
         r, c = next_entry(i)
         sudoku[r, c] += 1
         if sudoku[r, c] > 9:
             sudoku[r, c] = 0
             return None
         if not rules(sudoku, r, c):
-            return solve(sudoku, i)
-        tmp = state(sudoku, i)
+            return solve_entry(sudoku, i)
+        tmp = search(sudoku, i)
         if tmp is None:
-            return solve(sudoku, i)
+            return solve_entry(sudoku, i)
         return sudoku
 
+    # The sudoku rules applied to an entry in the sudoku
     def rules(sudoku, r, c):
         def row(sudoku, row):
             return unique(sudoku[row, :])
@@ -65,11 +66,11 @@ def sudokusolve(sudoku):
 
         return (row(sudoku, r) and column(sudoku, c) and box(sudoku, r, c))
 
-    return state(sudoku, -1)
+    return search(sudoku, -1)
 
 
 if __name__ == "__main__":
-    s = np.array([
+    sudoku = np.array([
         [5, 3, 0, 0, 7, 0, 0, 0, 0],
         [6, 0, 0, 1, 9, 5, 0, 0, 0],
         [0, 9, 8, 0, 0, 0, 0, 6, 0],
@@ -79,4 +80,4 @@ if __name__ == "__main__":
         [0, 6, 0, 0, 0, 0, 2, 8, 0],
         [0, 0, 0, 4, 1, 9, 0, 0, 5],
         [0, 0, 0, 0, 8, 0, 0, 7, 0]])
-    print(sudokusolve(s))
+    print(solve_sudoku(sudoku))
