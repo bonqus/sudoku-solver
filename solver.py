@@ -66,7 +66,7 @@ def solve_sudoku(sudoku):
 
         return (row(sudoku, r) and column(sudoku, c) and box(sudoku, r, c))
 
-    return search(sudoku, -1)
+    return search(np.copy(sudoku), -1)
 
 
 if __name__ == "__main__":
