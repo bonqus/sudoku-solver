@@ -1,4 +1,8 @@
-def print_sudoku(sudoku):
+# Pretty printer module
+
+
+def sudoku(f, sudoku, elapsed):
+    print(f + ': Solved in ', '{:.3g}'.format(elapsed), 's')
     row = ('+' + '-'*7)*3 + '+'
     for i in range(9):
         if i % 3 == 0:
@@ -11,5 +15,21 @@ def print_sudoku(sudoku):
     print(('+' + '-'*7)*3 + '+')
 
 
-def print_no_solution(f):
-    print(f, 'is unsolvable.')
+def no_solution(f):
+    print(f + ': Is unsolvable.')
+
+
+def no_file(f):
+    print(f + ': No such file')
+
+
+def not_sudoku(f):
+    print(f + ': Is not a Sudoku')
+
+
+def is_directory(f):
+    print(f + ': Is a directory, not a Sudoku')
+
+
+def shape_error(f, shape):
+    print(f + ': Has a', shape, 'shape, this solver only supports (9, 9)')
