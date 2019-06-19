@@ -9,3 +9,7 @@ def print_sudoku(sudoku):
             print(int(sudoku[i, j]), end=' ')
         print('|')
     print(('+' + '-'*7)*3 + '+')
+
+
+def print_no_solution(f):
+    print(f, 'is unsolvable.')
