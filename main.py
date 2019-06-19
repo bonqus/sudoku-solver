@@ -2,7 +2,7 @@ import argparse
 
 import numpy as np
 
-from prettyprint import print_sudoku
+from prettyprint import print_no_solution, print_sudoku
 from solver import solve_sudoku
 
 if __name__ == '__main__':
@@ -15,4 +15,7 @@ if __name__ == '__main__':
         for f in args.sudoku:
             sudoku = np.loadtxt(f, delimiter=',')
             sudoku_solved = solve_sudoku(sudoku)
-            print_sudoku(sudoku_solved)
+            if sudoku_solved is None:
+                print_no_solution(f)
+            else:
+                print_sudoku(sudoku_solved)
