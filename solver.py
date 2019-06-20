@@ -1,4 +1,4 @@
-import numpy as np
+from numpy import copy
 
 
 def solve_sudoku(sudoku):
@@ -45,11 +45,11 @@ def solve_sudoku(sudoku):
 
     # The sudoku rules applied to an entry in the sudoku
     def rules(sudoku, r, c):
-        def row(sudoku, row):
-            return unique(sudoku[row, :])
+        def row(sudoku, r):
+            return unique(sudoku[r, :])
 
-        def column(sudoku, column):
-            return unique(sudoku[:, column])
+        def column(sudoku, c):
+            return unique(sudoku[:, c])
 
         def box(sudoku, r, c):
             return unique(sudoku[r//3*3:r//3*3+3, c//3*3:c//3*3+3].flatten())
@@ -57,18 +57,20 @@ def solve_sudoku(sudoku):
         def unique(collection):
             mem = []
             for number in collection:
-                if number != 0 and number in mem:
+                if number in mem:
                     return False
-                mem.append(number)
+                if number != 0:
+                    mem.append(number)
             return True
 
         return (row(sudoku, r) and column(sudoku, c) and box(sudoku, r, c))
 
-    return search(np.copy(sudoku), -1)
+    return search(copy(sudoku), -1)
 
 
 if __name__ == "__main__":
-    sudoku = np.array([
+    from numpy import array
+    sudoku = array([
         [5, 3, 0, 0, 7, 0, 0, 0, 0],
         [6, 0, 0, 1, 9, 5, 0, 0, 0],
         [0, 9, 8, 0, 0, 0, 0, 6, 0],
