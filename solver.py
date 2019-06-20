@@ -20,30 +20,28 @@ def solve_sudoku(sudoku):
 
     """
 
-    def next_entry(i):
+    def entry(i):
         return (i // 9, i % 9)
 
     def search(sudoku, i):
         i += 1
         if i == 81:
             return sudoku
-        r, c = next_entry(i)
-        if sudoku[r, c] == 0:
+        if sudoku[entry(i)] == 0:
             return solve_entry(sudoku, i)
         return search(sudoku, i)
 
     def solve_entry(sudoku, i):
-        r, c = next_entry(i)
+        r, c = entry(i)
         sudoku[r, c] += 1
         if sudoku[r, c] > 9:
             sudoku[r, c] = 0
             return None
-        if not rules(sudoku, r, c):
-            return solve_entry(sudoku, i)
-        tmp = search(sudoku, i)
-        if tmp is None:
-            return solve_entry(sudoku, i)
-        return sudoku
+        if rules(sudoku, r, c):
+            tmp = search(sudoku, i)
+            if tmp is not None:
+                return tmp
+        return solve_entry(sudoku, i)
 
     # The sudoku rules applied to an entry in the sudoku
     def rules(sudoku, r, c):
