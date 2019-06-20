@@ -35,7 +35,7 @@ def solve_sudoku(sudoku):
         r, c = entry(i)
         sudoku[r, c] += 1
         if sudoku[r, c] > 9:
-            sudoku[r, c] = 0
+            sudoku[r, c] = 0  # TODO: change datastructure so this is'nt needed
             return None
         if rules(sudoku, r, c):
             tmp = search(sudoku, i)
