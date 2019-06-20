@@ -63,7 +63,7 @@ def solve_sudoku(sudoku):
                     mem.append(number)
             return True
 
-        return (row(sudoku, r) and column(sudoku, c) and box(sudoku, r, c))
+        return row(sudoku, r) and column(sudoku, c) and box(sudoku, r, c)
 
     return search(copy(sudoku), -1)
 
