@@ -24,12 +24,11 @@ def solve_sudoku(sudoku):
         return (i // 9, i % 9)
 
     def search(sudoku, i):
-        i += 1
         if i == 81:
             return sudoku
         if sudoku[entry(i)] == 0:
             return solve_entry(sudoku, i)
-        return search(sudoku, i)
+        return search(sudoku, i+1)
 
     def solve_entry(sudoku, i):
         r, c = entry(i)
@@ -65,7 +64,7 @@ def solve_sudoku(sudoku):
 
         return row(sudoku, r) and column(sudoku, c) and box(sudoku, r, c)
 
-    return search(copy(sudoku), -1)
+    return search(copy(sudoku), 0)
 
 
 if __name__ == "__main__":
